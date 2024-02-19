@@ -24,7 +24,14 @@ public class TravelArrayImpl implements Travel {
 	
 	
    public TravelArrayImpl(Date date, int nSeats){
-	   //TODO 
+	   this.travelDate = date;
+	   this.nSeats = nSeats;
+		Seat[] TravelSeats = new Seat[nSeats];
+		for(int i=0 ;i<TravelSeats.length;i++){
+			TravelSeats[i]= null;
+		
+		}
+	//TODO 
 	   // utiliza los precios por defecto: DEFAULT_PRICE y DEFAULT_DISCOUNT definidos en esta clase
 	   //debe crear el array de asientos
 	   
@@ -32,6 +39,15 @@ public class TravelArrayImpl implements Travel {
    
    
    public TravelArrayImpl(Date date, int nSeats, Double price, Byte discount){
+	   this.travelDate = date;
+	   this.nSeats = nSeats;
+	   this.price = price;
+	   this.discountAdvanceSale = discount;
+	   Seat[] TravelSeats = new Seat[nSeats];
+	   for(int i=0 ;i<TravelSeats.length;i++){
+		TravelSeats[i]= null;
+	
+	}
 	   //TODO 
 	   // Debe crear el array de asientos
 	   
@@ -45,6 +61,10 @@ public class TravelArrayImpl implements Travel {
 @Override
 public Byte getDiscountAdvanceSale() {
 	// TODO Auto-generated method stub
+	if(){
+	return DEFAULT_DISCOUNT;
+	}else{
+	}
 	return 0;
 }
 
@@ -52,13 +72,21 @@ public Byte getDiscountAdvanceSale() {
 @Override
 public int getNumberOfSoldSeats() {
 	// TODO Auto-generated method stub
-	return 0;
+	int NumberOfSoldSeats = 0;
+	Seat[] TravelSeats = new Seat[nSeats];
+	for(int i = 0; i < nSeats; i++){
+		if(TravelSeats[i] != null){
+			NumberOfSoldSeats +=1;
+		}
+	}
+	return NumberOfSoldSeats;
 }
 
 
 @Override
 public int getNumberOfNormalSaleSeats() {
 	// TODO Auto-generated method stub
+
 	return 0;
 }
 
@@ -80,6 +108,7 @@ public int getNumberOfSeats() {
 @Override
 public int getNumberOfAvailableSeats() {
 	// TODO Auto-generated method stub
+	
 	return 0;
 
 }
