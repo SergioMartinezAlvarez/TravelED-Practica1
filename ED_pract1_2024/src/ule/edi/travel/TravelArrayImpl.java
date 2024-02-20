@@ -86,37 +86,52 @@ public int getNumberOfSoldSeats() {
 @Override
 public int getNumberOfNormalSaleSeats() {
 	// TODO Auto-generated method stub
-
-	return 0;
+	int NumberOfNormalSeats = getNumberOfSeats() - getNumberOfAdvanceSaleSeats();
+	
+	return NumberOfNormalSeats;
 }
 
 
 @Override
 public int getNumberOfAdvanceSaleSeats() {
 	// TODO Auto-generated method stub
-	return 0;
+	int NumberOfAdvanceSaleSeats;
+
+	return NumberOfAdvanceSaleSeats;
 }
 
 
 @Override
 public int getNumberOfSeats() {
 	// TODO Auto-generated method stub
-	return 0;
+	return 7;
 }
 
 
 @Override
 public int getNumberOfAvailableSeats() {
 	// TODO Auto-generated method stub
-	
-	return 0;
+	int NumberOfAvailableSeats = 0;
+	Seat[] TravelSeats = new Seat[nSeats];
+	for(int i = 0; i < nSeats; i++){
+		if(TravelSeats[i] == null){
+			NumberOfAvailableSeats +=1;
+		}
+	}
+	return NumberOfAvailableSeats;
 
 }
 
 @Override
 public Seat getSeat(int pos) {
 	// TODO Auto-generated method stub
-	return null;
+	Seat[] TravelSeats = new Seat[nSeats];
+	if (pos >= 0 && pos < nSeats){
+		return TravelSeats[pos];
+	}else{
+		System.out.println("Invalid position");
+		return null;
+	}
 }
 
 
@@ -131,12 +146,20 @@ public Person refundSeat(int pos) {
 
 private boolean isChildren(int age) {
 	// TODO Auto-generated method stub
-	return false;
+	Boolean isChildren = false;
+	if (age < 18) {
+		isChildren = true;
+	}
+	return isChildren;
 }
 
 private boolean isAdult(int age) {
 	// TODO Auto-generated method stub
-	return false;
+	Boolean isAdult = false;
+	if (age >= 18) {
+		isAdult = true;
+	}
+	return isAdult;
 }
 
 
@@ -163,7 +186,16 @@ public List<Integer> getAdvanceSaleSeatsList() {
 @Override
 public int getMaxNumberConsecutiveSeats() {
 	// TODO Auto-generated method stub
-	return 0;
+	int ConsecutiveSeats = 0;
+	for(int i = 0; i < nSeats - 1 ; i++){
+		if(seats[i] == seats[i+1] ){
+			ConsecutiveSeats += 1;
+		}else{
+			ConsecutiveSeats = 0;
+		
+		}
+	}
+	return ConsecutiveSeats;
 }
 
 
