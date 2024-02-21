@@ -209,8 +209,10 @@ public int getMaxNumberConsecutiveSeats() {
 public boolean isAdvanceSale(Person p) {
 	// TODO Auto-generated method stub
 	Person person = p;
+	
 	for(int i = 0; i < nSeats; i++){
-		if(seats[i].getHolder().equals(person) && seats[i].getSeatPrice() == DEFAULT_DISCOUNT){
+		if(seats[i].getHolder().equals(person)){
+			Seat seat = new Seat(true, person);
 			return true;
 		}
 	}
@@ -237,16 +239,26 @@ public boolean sellSeatPos(int pos, String nif, String name, int edad, boolean i
 @Override
 public int getNumberOfChildren() {
 	// TODO Auto-generated method stub
-	
-	return 0;
+	int NumberOfChildren = 0;
+	for(int i = 0; i < nSeats; i++){
+		if(isChildren(seats[i].getHolder().getAge())){
+			return NumberOfChildren += 1;
+		}
+	}
+	return NumberOfChildren;
 }
 
 
 @Override
 public int getNumberOfAdults() {
 	// TODO Auto-generated method stub
-	
-	return 0;
+	int NumberOfAdults = 0;
+	for(int i = 0; i < nSeats; i++){
+		if(isAdult(seats[i].getHolder().getAge())){
+			return NumberOfAdults += 1;
+		}
+	}
+	return NumberOfAdults;
 }
 
 
@@ -254,8 +266,14 @@ public int getNumberOfAdults() {
 @Override
 public Double getCollectionTravel() {
 	// TODO Auto-generated method stub
+	Double AllMoneyCollected = 0.0;
+	for(int i = 0; i < nSeats; i++){
+		if(seats[i] != null){
+			AllMoneyCollected += seats[i].getSeatPrice();
+		}
+	}
 	
-	return 0.0;
+	return AllMoneyCollected;
 }
 
 
@@ -285,7 +303,15 @@ public int sellSeatRearPos(String nif, String name, int edad, boolean isAdvanceS
 @Override
 public Double getSeatPrice(Seat seat) {
 	// TODO Auto-generated method stub
-	return 0.0;
+	Double SeatPrice = 0.0;
+	for(int i = 0; i < nSeats; i++){
+		if(seats[i].isAdvanceSale()){
+			SeatPrice += getDiscountAdvanceSale();
+		}else{
+			SeatPrice += DEFAULT_PRICE;
+		}
+	}
+	return SeatPrice;
 }
 
 
