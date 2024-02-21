@@ -61,11 +61,7 @@ public class TravelArrayImpl implements Travel {
 @Override
 public Byte getDiscountAdvanceSale() {
 	// TODO Auto-generated method stub
-	if(){
 	return DEFAULT_DISCOUNT;
-	}else{
-	}
-	return 0;
 }
 
 
@@ -95,7 +91,7 @@ public int getNumberOfNormalSaleSeats() {
 @Override
 public int getNumberOfAdvanceSaleSeats() {
 	// TODO Auto-generated method stub
-	int NumberOfAdvanceSaleSeats;
+	int NumberOfAdvanceSaleSeats = getNumberOfSeats();
 
 	return NumberOfAdvanceSaleSeats;
 }
@@ -138,8 +134,16 @@ public Seat getSeat(int pos) {
 @Override
 public Person refundSeat(int pos) {
 	// TODO Auto-generated method stub
-	
-	return null;
+	Seat[] TravelSeats = new Seat[nSeats];
+	if (pos >= 0 && pos < nSeats){
+		Person holder = TravelSeats[pos].getHolder();
+		TravelSeats[pos] = null;
+		return holder;
+	}else{
+		System.out.println("Invalid position");
+		return null;
+	}
+
 }
 
 
@@ -204,6 +208,12 @@ public int getMaxNumberConsecutiveSeats() {
 @Override
 public boolean isAdvanceSale(Person p) {
 	// TODO Auto-generated method stub
+	Person person = p;
+	for(int i = 0; i < nSeats; i++){
+		if(seats[i].getHolder().equals(person) && seats[i].getSeatPrice() == DEFAULT_DISCOUNT){
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -211,7 +221,9 @@ public boolean isAdvanceSale(Person p) {
 @Override
 public Date getTravelDate() {
 	// TODO Auto-generated method stub
-	return ;
+	Date travelDate;
+	travelDate = this.travelDate;
+	return travelDate;
 }
 
 
