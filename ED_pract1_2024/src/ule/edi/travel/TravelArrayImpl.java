@@ -82,7 +82,13 @@ public int getNumberOfSoldSeats() {
 @Override
 public int getNumberOfNormalSaleSeats() {
 	// TODO Auto-generated method stub
-	int NumberOfNormalSeats = getNumberOfSeats() - getNumberOfAdvanceSaleSeats();
+	int NumberOfNormalSeats = 0;
+	Seat[] TravelSeats = new Seat[nSeats];
+	for(int i = 0; i < nSeats; i++){
+		if(!TravelSeats[i].getAdvanceSale()){
+			NumberOfNormalSeats +=1;
+		}
+	}
 	
 	return NumberOfNormalSeats;
 }
@@ -91,7 +97,13 @@ public int getNumberOfNormalSaleSeats() {
 @Override
 public int getNumberOfAdvanceSaleSeats() {
 	// TODO Auto-generated method stub
-	int NumberOfAdvanceSaleSeats = getNumberOfSeats();
+	int NumberOfAdvanceSaleSeats = 0;
+	Seat[] TravelSeats = new Seat[nSeats];
+	for(int i = 0; i < nSeats; i++){
+		if(TravelSeats[i].getAdvanceSale()){
+			NumberOfAdvanceSaleSeats +=1;
+		}
+	}
 
 	return NumberOfAdvanceSaleSeats;
 }
@@ -100,7 +112,8 @@ public int getNumberOfAdvanceSaleSeats() {
 @Override
 public int getNumberOfSeats() {
 	// TODO Auto-generated method stub
-	return 7;
+
+	return nSeats;
 }
 
 
@@ -118,6 +131,7 @@ public int getNumberOfAvailableSeats() {
 
 }
 
+//Dudilla, preguntar si la posicion de parametro se rige desde 0 o desde 1.
 @Override
 public Seat getSeat(int pos) {
 	// TODO Auto-generated method stub
@@ -130,7 +144,7 @@ public Seat getSeat(int pos) {
 	}
 }
 
-
+//Misma duda que en el metodo anterior.
 @Override
 public Person refundSeat(int pos) {
 	// TODO Auto-generated method stub
@@ -147,7 +161,7 @@ public Person refundSeat(int pos) {
 }
 
 
-
+//En estos dos creo q me falta algo, pero no se que es. Seguramente coger la edad desde el array llamando a la funcion getAge de la clase Person.
 private boolean isChildren(int age) {
 	// TODO Auto-generated method stub
 	Boolean isChildren = false;
@@ -191,7 +205,7 @@ public List<Integer> getAdvanceSaleSeatsList() {
 public int getMaxNumberConsecutiveSeats() {
 	// TODO Auto-generated method stub
 	int ConsecutiveSeats = 0;
-	for(int i = 0; i < nSeats - 1 ; i++){
+	for(int i = 0; i < nSeats - 1 ; i++){ //nSeats - 1 para que no se salga del array al luego añadir 1
 		if(seats[i] == seats[i+1] ){
 			ConsecutiveSeats += 1;
 		}else{
@@ -202,18 +216,15 @@ public int getMaxNumberConsecutiveSeats() {
 	return ConsecutiveSeats;
 }
 
-
-
-
+//El return false lo noto raro.
 @Override
 public boolean isAdvanceSale(Person p) {
 	// TODO Auto-generated method stub
 	Person person = p;
-	
+	Seat[] TravelSeats = new Seat[nSeats];
 	for(int i = 0; i < nSeats; i++){
-		if(seats[i].getHolder().equals(person)){
-			Seat seat = new Seat(true, person);
-			return true;
+		if(TravelSeats[i].getHolder().equals(person)){
+			return TravelSeats[i].getAdvanceSale();
 		}
 	}
 	return false;
@@ -223,16 +234,25 @@ public boolean isAdvanceSale(Person p) {
 @Override
 public Date getTravelDate() {
 	// TODO Auto-generated method stub
-	Date travelDate;
-	travelDate = this.travelDate;
-	return travelDate;
+	return this.travelDate;
 }
 
 
 @Override
 public boolean sellSeatPos(int pos, String nif, String name, int edad, boolean isAdvanceSale) {
 	// TODO Auto-generated method stub
-	return false;
+	boolean sell = false;
+	Seat[] TravelSeats = new Seat[nSeats];
+	if (pos >= 0 && pos < nSeats){
+		if(TravelSeats[pos] == null){
+			Person person = new Person(nif, name, edad);
+			TravelSeats[pos] = new Seat(isAdvanceSale, person);
+			sell = true;
+		}else{
+			System.out.println("Seat already sold");
+		}
+	}
+	return sell;
 }
 
 
@@ -269,7 +289,7 @@ public Double getCollectionTravel() {
 	Double AllMoneyCollected = 0.0;
 	for(int i = 0; i < nSeats; i++){
 		if(seats[i] != null){
-			AllMoneyCollected += seats[i].getSeatPrice();
+			AllMoneyCollected += getSeatPrice();
 		}
 	}
 	
@@ -305,7 +325,7 @@ public Double getSeatPrice(Seat seat) {
 	// TODO Auto-generated method stub
 	Double SeatPrice = 0.0;
 	for(int i = 0; i < nSeats; i++){
-		if(seats[i].isAdvanceSale()){
+		if(seats[i].getAdvanceSale()){
 			SeatPrice += getDiscountAdvanceSale();
 		}else{
 			SeatPrice += DEFAULT_PRICE;
