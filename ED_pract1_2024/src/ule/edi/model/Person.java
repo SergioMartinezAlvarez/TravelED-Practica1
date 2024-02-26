@@ -49,10 +49,7 @@ public class Person {
 		if (this.nif.equals(obj)) {
 			return true;
 		} else {
-		// TODO Auto-generated method stub
-		// Dos personas son iguales si son iguales sus nifs
 
-    	
 		return false;
 		}
 	
